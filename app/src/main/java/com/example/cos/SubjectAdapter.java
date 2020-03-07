@@ -49,6 +49,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
                 Intent i=new Intent(mcontext,Chapters.class);
                 i.putExtra("ClassName",classname);
                 i.putExtra("SubjectName",msubjectnames.get(position));
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mcontext.startActivity(i);
             }
         });

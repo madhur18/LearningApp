@@ -53,6 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Toast.makeText(mcontext,""+mclassnames.get(position),Toast.LENGTH_SHORT).show();
                 Intent i=new Intent(mcontext,Subjects.class);
                 i.putExtra("ClassName",mclassnames.get(position));
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mcontext.startActivity(i);
             }
         });

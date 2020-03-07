@@ -20,8 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class VideoPlayer extends YouTubeBaseActivity {
 
+    private final static String expression = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*";
     YouTubePlayerView youTubePlayerView;
     Button button;
     String url;
@@ -48,7 +52,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
                 Toast.makeText(getApplicationContext(),"videourl:"+videourl,Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "onCreate: videourl:"+videourl);
                 if(videourl!=null)
-                    url=videourl.substring(videourl.lastIndexOf("=")+1);
+                    url=getVideoId(videourl);
                 onInitializedListener=new YouTubePlayer.OnInitializedListener() {
                     @Override
                     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
@@ -79,5 +83,20 @@ public class VideoPlayer extends YouTubeBaseActivity {
             }
         });
 
+    }
+
+    public static String getVideoId(String videoUrl) {
+        if (videoUrl == null || videoUrl.trim().length() <= 0){
+            return null;
+        }
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(videoUrl);
+        try {
+            if (matcher.find())
+                return matcher.group();
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

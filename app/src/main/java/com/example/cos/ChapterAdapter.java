@@ -54,6 +54,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
                 Toast.makeText(mcontext,""+mchapternames.get(position),Toast.LENGTH_SHORT).show();
                 Intent i=new Intent(mcontext,StudyPane.class);
                 i.putExtra("Path",path+mchapternames.get(position)+"/");
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Toast.makeText(mcontext,"Path:"+path,Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "onClick: Path:"+path);
                 mcontext.startActivity(i);
